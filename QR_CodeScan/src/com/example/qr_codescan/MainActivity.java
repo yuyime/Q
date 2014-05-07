@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private final static int SCANNIN_GREQUEST_CODE = 1;
-	//account
+	//account 
 	private EditText iaccount ;
 	//pass
 	private EditText ipass ;
