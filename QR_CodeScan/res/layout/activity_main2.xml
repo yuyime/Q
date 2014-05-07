@@ -28,6 +28,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="31dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:ems="10"
         android:hint="@string/account_hint" />
     
@@ -37,8 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/pass"
-        android:layout_marginTop="140dp"
-        android:text="@string/account_ok" />
+        android:layout_marginTop="120dp"
+        android:textSize="30sp"
+        android:text="@string/account_ok"
+        android:textColor="@color/button_textcolor"
+        />
 
     <EditText
         android:id="@+id/pass"
@@ -48,6 +53,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/account"
         android:layout_marginTop="16dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:ems="10"
         android:hint="@string/pass_hint"
         android:inputType="textPassword" />

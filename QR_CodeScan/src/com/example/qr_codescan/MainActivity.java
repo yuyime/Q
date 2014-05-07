@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,63 +44,78 @@ public class MainActivity extends Activity {
 			okButton.setEnabled(false);
 		}
 		
-		iaccount.setOnKeyListener(new accountInputOnKeyListener());
-//		okButton.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent();
-//				intent.setClass(MainActivity.this, MipcaActivityCapture.class);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
-//			}
-//		});
+		iaccount.addTextChangedListener(new accountInputTextWatcher() );
+		ipass.addTextChangedListener(new accountInputTextWatcher() );
+		okButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, MipcaActivityCapture.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
+			}
+		});
 		//mImageView = (ImageView) findViewById(R.id.qrcode_bitmap);
 //		
 		//点击按钮跳转到二维码扫描界面，这里用的是startActivityForResult跳转
 		//扫描完了之后调到该界面
-//		
-//		mButton.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent();
-//				intent.setClass(MainActivity.this, MipcaActivityCapture.class);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
-//			}
-//		});
-	}
-	
-	
-//	@Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//		case SCANNIN_GREQUEST_CODE:
-//			if(resultCode == RESULT_OK){
-//				Bundle bundle = data.getExtras();
-//				//显示扫描到的内容
-//				mTextView.setText(bundle.getString("result"));
-//				//显示
-//				mImageView.setImageBitmap((Bitmap) data.getParcelableExtra("bitmap"));
-//			}
-//			break;
-//		}
-//    }	
-	
-	
-	class accountInputOnKeyListener implements OnKeyListener{
-
-		@Override
-		public boolean onKey(View v, int keyCode, KeyEvent event) {
-			System.out.println("yuyi111");
-			if(!iaccount.getText().toString().equals("")&&!ipass.getText().equals("")){
-				okButton.setEnabled(true);
-				System.out.println("yuyi");
+		
+		okButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, MipcaActivityCapture.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
 			}
-			return false;
-		}
-		
-		
+		});
 	}
+	
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+		case SCANNIN_GREQUEST_CODE:
+			if(resultCode == RESULT_OK){
+				Bundle bundle = data.getExtras();
+				//获得扫描到的内容
+				QRString=	bundle.getString("result");
+				//显示
+				//mImageView.setImageBitmap((Bitmap) data.getParcelableExtra("bitmap"));
+			}
+			break;
+		}
+    }	
+	
+	
+	class accountInputTextWatcher implements TextWatcher{
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				System.out.println("yuyi111");
+				String iaccountString=iaccount.getText().toString();
+				String ipassString=ipass.getText().toString();
+				if(iaccountString.equals("")||ipassString.equals("")){
+					okButton.setEnabled(false);
+				}else {
+					okButton.setEnabled(true);
+					System.out.println("yuyi");
+				}
+				
+			}
+		}
 }

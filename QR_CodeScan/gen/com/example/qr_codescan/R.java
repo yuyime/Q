@@ -11,6 +11,8 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int button_background=0x7f050003;
+        public static final int button_textcolor=0x7f050004;
         public static final int possible_result_points=0x7f050002;
         public static final int result_view=0x7f050000;
         public static final int viewfinder_mask=0x7f050001;
