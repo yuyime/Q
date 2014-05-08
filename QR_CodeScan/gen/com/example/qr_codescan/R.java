@@ -33,7 +33,6 @@ public final class R {
         public static final int auto_focus=0x7f060000;
         public static final int button1=0x7f060013;
         public static final int button_back=0x7f06001a;
-        public static final int checkBox1=0x7f060019;
         public static final int decode=0x7f060001;
         public static final int decode_failed=0x7f060002;
         public static final int decode_succeeded=0x7f060003;
@@ -48,6 +47,7 @@ public final class R {
         public static final int preview_view=0x7f060010;
         public static final int qrcode_bitmap=0x7f060015;
         public static final int quit=0x7f060007;
+        public static final int remember_option=0x7f060019;
         public static final int restart_preview=0x7f060008;
         public static final int result=0x7f060014;
         public static final int return_scan_result=0x7f060009;

@@ -60,7 +60,7 @@
         android:inputType="textPassword" />
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/remember_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
