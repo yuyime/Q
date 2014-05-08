@@ -1,6 +1,7 @@
 package com.example.qr_codescan;
 
 
+import com.http.HttpHelper;
 import com.user.UserOperator;
 
 import android.app.Activity;
@@ -104,7 +105,36 @@ public class MainActivity extends Activity {
 				//显示
 				Toast toast = Toast.makeText(getApplicationContext(),QRString, Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER, 0, 0);
-				toast.show();
+				//toast.show();
+				if(QRString.trim().equals("")){
+					toast.setText("无效的数据！！！");
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					break;
+				}
+				
+				HttpHelper httpHelper=new HttpHelper();
+				if(httpHelper.switchParams(QRString, this.iaccount.getText().toString(), ipass.getText().toString())){
+					if(httpHelper.requestQRAccessServer()){
+						toast.setText("已经成功接入！！！");
+						toast.show();
+						break;
+					}else{
+						toast.setText("接入失败！！！");
+						toast.show();
+						break;
+					}
+				}else{
+					toast.setText("参数已经被篡改！！！");
+					toast.show();
+					break;
+				}
+				
+				
+				
+				
+				
+				
 				//mImageView.setImageBitmap((Bitmap) data.getParcelableExtra("bitmap"));
 			}
 			break;
