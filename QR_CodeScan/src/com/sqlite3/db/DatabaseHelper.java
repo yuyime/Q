@@ -5,14 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
-//DatabaseHelper×÷ÎªÒ»¸ö·ÃÎÊSQLiteµÄÖúÊÖÀà£¬Ìá¹©Á½¸ö·½ÃæµÄ¹¦ÄÜ£¬
-//µÚÒ»£¬getReadableDatabase(),getWritableDatabase()¿ÉÒÔ»ñµÃSQLiteDatabse¶ÔÏó£¬Í¨¹ı¸Ã¶ÔÏó¿ÉÒÔ¶ÔÊı¾İ¿â½øĞĞ²Ù×÷
-//µÚ¶ş£¬Ìá¹©ÁËonCreate()ºÍonUpgrade()Á½¸ö»Øµ÷º¯Êı£¬ÔÊĞíÎÒÃÇÔÚ´´½¨ºÍÉı¼¶Êı¾İ¿âÊ±£¬½øĞĞ×Ô¼ºµÄ²Ù×÷
+//DatabaseHelperä½œä¸ºä¸€ä¸ªè®¿é—®SQLiteçš„åŠ©æ‰‹ç±»ï¼Œæä¾›ä¸¤ä¸ªæ–¹é¢çš„åŠŸèƒ½ï¼Œ
+//ç¬¬ä¸€ï¼ŒgetReadableDatabase(),getWritableDatabase()å¯ä»¥è·å¾—SQLiteDatabseå¯¹è±¡ï¼Œé€šè¿‡è¯¥å¯¹è±¡å¯ä»¥å¯¹æ•°æ®åº“è¿›è¡Œæ“ä½œ
+//ç¬¬äºŒï¼Œæä¾›äº†onCreate()å’ŒonUpgrade()ä¸¤ä¸ªå›è°ƒå‡½æ•°ï¼Œå…è®¸æˆ‘ä»¬åœ¨åˆ›å»ºå’Œå‡çº§æ•°æ®åº“æ—¶ï¼Œè¿›è¡Œè‡ªå·±çš„æ“ä½œ
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final int VERSION = 1;
-	//ÔÚSQLiteOepnHelperµÄ×ÓÀàµ±ÖĞ£¬±ØĞëÓĞ¸Ã¹¹Ôìº¯Êı
+	//åœ¨SQLiteOepnHelperçš„å­ç±»å½“ä¸­ï¼Œå¿…é¡»æœ‰è¯¥æ„é€ å‡½æ•°
 	public DatabaseHelper(Context context, String name, CursorFactory factory,int version) {
 		super(context, name, factory, version);
 	}
@@ -23,10 +23,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		this(context, name,null,version);
 	}
 
-	//¸Ãº¯ÊıÊÇÔÚµÚÒ»´Î´´½¨Êı¾İ¿âµÄÊ±ºòÖ´ĞĞ,Êµ¼ÊÉÏÊÇÔÚµÚÒ»´ÎµÃµ½SQLiteDatabse¶ÔÏóµÄÊ±ºò£¬²Å»áµ÷ÓÃÕâ¸ö·½·¨
+	//è¯¥å‡½æ•°æ˜¯åœ¨ç¬¬ä¸€æ¬¡åˆ›å»ºæ•°æ®åº“çš„æ—¶å€™æ‰§è¡Œ,å®é™…ä¸Šæ˜¯åœ¨ç¬¬ä¸€æ¬¡å¾—åˆ°SQLiteDatabseå¯¹è±¡çš„æ—¶å€™ï¼Œæ‰ä¼šè°ƒç”¨è¿™ä¸ªæ–¹æ³•
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//execSQLº¯ÊıÓÃÓÚÖ´ĞĞSQLÓï¾ä
+		//execSQLå‡½æ•°ç”¨äºæ‰§è¡ŒSQLè¯­å¥
 		System.out.println("create a Database");
 		db.execSQL("create table local_user(id int,uid int,uasno varchar(20),uapass varchar(50))");
 	}

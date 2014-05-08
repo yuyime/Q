@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 	private Button okButton ;
 	//okButton
 	private CheckBox remember_option ;
-	//¶şÎ¬Âë×Ö·û´®Öµ
+	//äºŒç»´ç å­—ç¬¦ä¸²å€¼
 	private String QRString ;
 	
 	//private ImageView mImageView;
@@ -65,8 +65,8 @@ public class MainActivity extends Activity {
 		});
 		//mImageView = (ImageView) findViewById(R.id.qrcode_bitmap);
 //		
-		//µã»÷°´Å¥Ìø×ªµ½¶şÎ¬ÂëÉ¨Ãè½çÃæ£¬ÕâÀïÓÃµÄÊÇstartActivityForResultÌø×ª
-		//É¨ÃèÍêÁËÖ®ºóµ÷µ½¸Ã½çÃæ
+		//ç‚¹å‡»æŒ‰é’®è·³è½¬åˆ°äºŒç»´ç æ‰«æç•Œé¢ï¼Œè¿™é‡Œç”¨çš„æ˜¯startActivityForResultè·³è½¬
+		//æ‰«æå®Œäº†ä¹‹åè°ƒåˆ°è¯¥ç•Œé¢
 		
 		okButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -77,8 +77,8 @@ public class MainActivity extends Activity {
 					uoper.InsertOnly(1, iaccount.getText().toString(), ipass.getText().toString());
 					uoper=uoper.Query(1);
 				}else {
-					//Toast.makeText(getApplicationContext(), "ÄãÃ»ÓĞ¹´Ñ¡¼Ç×¡ÃÜÂë!",Toast.LENGTH_SHORT).show();
-					Toast toast = Toast.makeText(getApplicationContext(),"ÄãÃ»ÓĞ¹´Ñ¡¼Ç×¡ÃÜÂë!", Toast.LENGTH_LONG);
+					//Toast.makeText(getApplicationContext(), "ä½ æ²¡æœ‰å‹¾é€‰è®°ä½å¯†ç !",Toast.LENGTH_SHORT).show();
+					Toast toast = Toast.makeText(getApplicationContext(),"ä½ æ²¡æœ‰å‹¾é€‰è®°ä½å¯†ç !", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
@@ -99,9 +99,9 @@ public class MainActivity extends Activity {
 		case SCANNIN_GREQUEST_CODE:
 			if(resultCode == RESULT_OK){
 				Bundle bundle = data.getExtras();
-				//»ñµÃÉ¨Ãèµ½µÄÄÚÈİ
+				//è·å¾—æ‰«æåˆ°çš„å†…å®¹
 				QRString=	bundle.getString("result");
-				//ÏÔÊ¾
+				//æ˜¾ç¤º
 				Toast toast = Toast.makeText(getApplicationContext(),QRString, Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
