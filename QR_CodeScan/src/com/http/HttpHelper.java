@@ -89,13 +89,13 @@ public class HttpHelper {
 		//策略一：拆分拼凑法
 		try {
 			String temp[]=initURL.split("&");
-			this.baseurl=temp[0].split("?")[0];
+			this.baseurl=temp[0].split("[?]")[0];
 			this.uuid=temp[temp.length-1].split("=")[1];
 			this.realURL=this.baseurl
 					+"?Username="+iaccount
 					+"&Userpass="+ipass
 					+"&uuid="+this.uuid;
-			System.out.println("策略一:"+this.realURL);
+			//System.out.println("策略一:"+this.realURL);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,7 +108,7 @@ public class HttpHelper {
 				
 				String tempString="Username="+iaccount+"&Userpass="+ipass+"&uuid=";
 				this.realURL=initURL.replaceAll("yourname=icanin&yourpass=123&yourid=",tempString);
-				System.out.println("策略二:"+this.realURL);
+				//System.out.println("策略二:"+this.realURL);
 				return true;
 			} catch (Exception ee) {
 				System.out.println("策略二也失效，参数已经被篡改！！！");
@@ -122,6 +122,7 @@ public class HttpHelper {
 	public boolean requestQRAccessServer(){
 		System.out.println("URL="+this.realURL);
 		HttpGet httpGet=new HttpGet(this.realURL);
+//		HttpGet httpGet=new HttpGet("http://www.baidu.com");
 		HttpClient httpClient =new DefaultHttpClient();
 		HttpResponse response=null;
 		HttpEntity httpEntity=null;

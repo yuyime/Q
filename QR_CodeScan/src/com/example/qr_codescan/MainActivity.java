@@ -6,21 +6,18 @@ import com.user.UserOperator;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.KeyListener;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -35,6 +32,7 @@ public class MainActivity extends Activity {
 	private CheckBox remember_option ;
 	//二维码字符串值
 	private String QRString ;
+	private static boolean responsed=false ;
 	
 	//private ImageView mImageView;
 	
@@ -44,6 +42,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
 		setContentView(R.layout.activity_main2);
+//		if (android.os.Build.VERSION.SDK_INT > 9) {
+//		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//		    StrictMode.setThreadPolicy(policy);
+//		}
 		
 		iaccount = (EditText) findViewById(R.id.account);
 		ipass = (EditText) findViewById(R.id.pass);
@@ -92,6 +94,40 @@ public class MainActivity extends Activity {
 		});
 	}
 	
+	Handler handler = new Handler(){
+	    @Override
+	    public void handleMessage(Message msg) {
+	        super.handleMessage(msg);
+	        Bundle data = msg.getData();
+	        String val = data.getString("value");
+	        Toast toast = Toast.makeText(getApplicationContext(),QRString, Toast.LENGTH_LONG);
+	        toast.setGravity(Gravity.CENTER, 0, 0);
+	        toast.setText(val);
+			toast.show();
+	    }
+	};
+	
+	Runnable runnable = new Runnable(){
+	    @Override
+	    public void run() {
+	        Message msg = new Message();
+	        Bundle data = new Bundle();
+	        HttpHelper httpHelper=new HttpHelper();
+			if(httpHelper.switchParams(QRString, MainActivity.this.iaccount.getText().toString(), ipass.getText().toString())){
+				MainActivity.responsed=true;
+				if(httpHelper.requestQRAccessServer()){
+					data.putString("value","已经成功接入！！！");
+				}else{
+					data.putString("value","接入失败！！！");
+				}
+			}else{
+				data.putString("value","参数已经被篡改！！！");
+			}
+	        msg.setData(data);
+	        handler.sendMessage(msg);
+	        
+	    }
+	};
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -108,39 +144,20 @@ public class MainActivity extends Activity {
 				//toast.show();
 				if(QRString.trim().equals("")){
 					toast.setText("无效的数据！！！");
-					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 					break;
 				}
-				
-				HttpHelper httpHelper=new HttpHelper();
-				if(httpHelper.switchParams(QRString, this.iaccount.getText().toString(), ipass.getText().toString())){
-					if(httpHelper.requestQRAccessServer()){
-						toast.setText("已经成功接入！！！");
-						toast.show();
-						break;
-					}else{
-						toast.setText("接入失败！！！");
-						toast.show();
-						break;
-					}
-				}else{
-					toast.setText("参数已经被篡改！！！");
+				MainActivity.responsed=false;
+				new Thread(runnable).start();
+				while(!responsed){
+					toast.setText("正在接入，请稍等...");
 					toast.show();
-					break;
 				}
-				
-				
-				
-				
-				
-				
 				//mImageView.setImageBitmap((Bitmap) data.getParcelableExtra("bitmap"));
 			}
 			break;
 		}
     }	
-	
 	
 	class accountInputTextWatcher implements TextWatcher{
 			
