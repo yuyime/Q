@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	//二维码字符串值
 	private String QRString ;
 	private static boolean responsed=false ;
-	
+	private Toast toast=null;
 	//private ImageView mImageView;
 	
 
@@ -42,11 +42,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
 		setContentView(R.layout.activity_main2);
-//		if (android.os.Build.VERSION.SDK_INT > 9) {
-//		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//		    StrictMode.setThreadPolicy(policy);
-//		}
-		
 		iaccount = (EditText) findViewById(R.id.account);
 		ipass = (EditText) findViewById(R.id.pass);
 		okButton = (Button) findViewById(R.id.okbutton);
@@ -54,20 +49,12 @@ public class MainActivity extends Activity {
 		if(iaccount.getText().toString().equals("")||ipass.getText().equals("")){
 			okButton.setEnabled(false);
 		}
+		toast = Toast.makeText(getApplicationContext(),"", Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
 		
 		iaccount.addTextChangedListener(new accountInputTextWatcher() );
 		ipass.addTextChangedListener(new accountInputTextWatcher() );
-		okButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, MipcaActivityCapture.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
-			}
-		});
 		//mImageView = (ImageView) findViewById(R.id.qrcode_bitmap);
-//		
 		//点击按钮跳转到二维码扫描界面，这里用的是startActivityForResult跳转
 		//扫描完了之后调到该界面
 		
@@ -100,8 +87,6 @@ public class MainActivity extends Activity {
 	        super.handleMessage(msg);
 	        Bundle data = msg.getData();
 	        String val = data.getString("value");
-	        Toast toast = Toast.makeText(getApplicationContext(),QRString, Toast.LENGTH_LONG);
-	        toast.setGravity(Gravity.CENTER, 0, 0);
 	        toast.setText(val);
 			toast.show();
 	    }
@@ -116,7 +101,10 @@ public class MainActivity extends Activity {
 			if(httpHelper.switchParams(QRString, MainActivity.this.iaccount.getText().toString(), ipass.getText().toString())){
 				MainActivity.responsed=true;
 				if(httpHelper.requestQRAccessServer()){
-					data.putString("value","已经成功接入！！！");
+					toast.cancel();
+					System.out.println(httpHelper.getResult());
+					MainActivity.this.dealResult(httpHelper.getResult());
+					return;
 				}else{
 					data.putString("value","接入失败！！！");
 				}
@@ -139,8 +127,6 @@ public class MainActivity extends Activity {
 				//获得扫描到的内容
 				QRString=	bundle.getString("result");
 				//显示
-				Toast toast = Toast.makeText(getApplicationContext(),QRString, Toast.LENGTH_LONG);
-				toast.setGravity(Gravity.CENTER, 0, 0);
 				//toast.show();
 				if(QRString.trim().equals("")){
 					toast.setText("无效的数据！！！");
@@ -186,4 +172,19 @@ public class MainActivity extends Activity {
 				
 			}
 		}
+	
+	public void dealResult(String result) {//XXX TODO
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, ResultActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+	
+	public void showResult() {
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, ResultActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+	
 }

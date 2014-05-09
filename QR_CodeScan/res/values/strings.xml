@@ -11,5 +11,7 @@
 	<string name="pass_hint">密码</string>
 	<string name="account_ok">确定</string>
 	<string name="remember_pass">记住密码</string>
+	<string name="back">返回</string>
+	<string name="title">二维码接入</string>
 	
 </resources>
