@@ -121,8 +121,8 @@ public class HttpHelper {
 	
 	public boolean requestQRAccessServer(){
 		System.out.println("URL="+this.realURL);
-		//HttpGet httpGet=new HttpGet(this.realURL);
-		HttpGet httpGet=new HttpGet("http://www.baidu.com");
+		HttpGet httpGet=new HttpGet(this.realURL);
+		//HttpGet httpGet=new HttpGet("http://www.baidu.com");
 		HttpClient httpClient =new DefaultHttpClient();
 		HttpResponse response=null;
 		HttpEntity httpEntity=null;

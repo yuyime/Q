@@ -9,10 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 public class UserOperator {
 private String uasno;
 private String uapass;
+private String cfgByName;
 private Context context;
 
 public UserOperator(Context context) {
 	super();
+	CreateDatabase();
 	this.context = context;
 }
 public Context getContext() {
@@ -122,4 +124,42 @@ public UserOperator Query(int id){
 		return null;
 	}
 }
+
+
+public boolean configByName(int version,String cfgname,String cfgvalue){
+	try {
+		ContentValues values = new ContentValues();
+		values.put("cfgname", cfgname);
+		values.put("cfgvalue",cfgvalue);
+		
+		DatabaseHelper dbHelper = new DatabaseHelper(this.getContext(),"a_qra_db",version);
+		SQLiteDatabase db=dbHelper.getReadableDatabase();
+		db.delete("config", "cfgname=?", new String[]{cfgname});
+		db.insert("config", null, values);
+		return true;
+	} catch (Exception e) {
+		return false;
+	}
+}
+
+public String getConfigByName(String cfgname){
+	try {
+		DatabaseHelper dbHelper = new DatabaseHelper(this.getContext(),"a_qra_db");
+		SQLiteDatabase db=dbHelper.getReadableDatabase();
+		Cursor cursor = db.query("config", new String[]{"cfgvalue"}, "cfgname=?"+"", new String[]{String.valueOf(cfgname)}, null, null, null);
+//		Cursor cursor = db.query("config", null, null, null, null, null, null);
+		while(cursor.moveToNext()){
+			return cursor.getString(cursor.getColumnIndex("cfgvalue"));
+		}
+		return null;
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println(e.getMessage());
+		return null;
+	}
+}
+
+
+
+
 }

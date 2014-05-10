@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		//execSQL函数用于执行SQL语句
 		System.out.println("create a Database");
 		db.execSQL("create table local_user(id int,uid int,uasno varchar(20),uapass varchar(50))");
+		db.execSQL("create table config(cfgname varchar(30),cfgvalue varchar(50))");
 	}
 
 	@Override

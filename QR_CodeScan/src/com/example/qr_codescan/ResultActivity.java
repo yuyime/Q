@@ -3,6 +3,7 @@ package com.example.qr_codescan;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,10 @@ public class ResultActivity extends Activity {
 			}
 		});
 		resultshow = (TextView) findViewById(R.id.access_result);
-		resultshow.setText(QRString);
 		mImageView = (ImageView) findViewById(R.id.access_result_image);
+		Intent intent=getIntent();
+		resultshow.setText(intent.getStringExtra("msg"));
+		
 		
 	}
 	
